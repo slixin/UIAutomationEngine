@@ -1,0 +1,44 @@
+﻿<UserControl x:Class="UIAutoXMLBuilder.ControlDefinitionUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:UIAutoXMLBuilder"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="400">
+    <UserControl.Resources>
+        <local:SnapshotConverter x:Key="SnapshotConverter" />
+    </UserControl.Resources>
+    <Grid Name="controlDefinition">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="120"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Label Grid.Column="0" Grid.Row="0" Content="Id:" Height="28" HorizontalAlignment="Right" Name="label1" VerticalAlignment="Center" />
+        <Label Grid.Column="0" Grid.Row="1" Content="Properties:" Height="28" HorizontalAlignment="Right" Name="label2" VerticalAlignment="Center" />
+        <Label Grid.Column="0" Grid.Row="2" Content="ControlType:" Height="28" HorizontalAlignment="Right" Name="label3" VerticalAlignment="Center" />
+        <Label Grid.Column="0" Grid.Row="3" Content="Scope:" Height="28" HorizontalAlignment="Right" Name="label5" VerticalAlignment="Center" />
+        <Label Grid.Column="0" Grid.Row="4" Content="Index:" Height="28" HorizontalAlignment="Right" Name="label4" VerticalAlignment="Center"  />
+        <Label Grid.Column="0" Grid.Row="5" Content="Framework:" Height="28" HorizontalAlignment="Right" Name="label6" VerticalAlignment="Center" />
+        <Label Grid.Column="0" Grid.Row="6" Content="Supported Pattern:" Height="28" HorizontalAlignment="Right" Name="label7" VerticalAlignment="Center" />
+        <Label Grid.Column="0" Grid.Row="7" Content="Snapshot:" Height="28" HorizontalAlignment="Right" Name="label8" VerticalAlignment="Top" />
+        <TextBox Grid.Column="1" Grid.Row="0" Height="23" HorizontalAlignment="Stretch"  Name="txtId" VerticalAlignment="Center" Width="Auto" Text="{Binding Path=Control.Id, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}" />
+        <TextBox Grid.Column="1" Grid.Row="1" Height="23" HorizontalAlignment="Stretch" Name="txtProperties" VerticalAlignment="Center" Width="Auto" Text="{Binding Path=Control.Properties, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}" />
+        <TextBox Grid.Column="1" Grid.Row="2" Height="23" HorizontalAlignment="Left" Name="txtControlType" VerticalAlignment="Center" Width="300" Text="{Binding Path=Control.ControlType, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}" />
+        <ComboBox Grid.Column="1" Grid.Row="3" Height="23" HorizontalAlignment="Left" Name="cmbScope" VerticalAlignment="Center" Width="300" SelectedValue="{Binding Path=Control.Scope, UpdateSourceTrigger=PropertyChanged}" />
+        <TextBox Grid.Column="1" Grid.Row="4" Height="23" HorizontalAlignment="Left" Name="txtIndex" VerticalAlignment="Center" Width="300" Text="{Binding Path=Control.Index, UpdateSourceTrigger=PropertyChanged}"  />
+        <TextBox Grid.Column="1" Grid.Row="5" Height="23" HorizontalAlignment="Left" Name="txtFramework" VerticalAlignment="Center" Width="300" Text="{Binding Path=Control.Framework, UpdateSourceTrigger=PropertyChanged}"  />
+        <TextBox Grid.Column="1" Grid.Row="6" Height="23" HorizontalAlignment="Stretch" Name="txtPattern" VerticalAlignment="Center" Width="Auto" Text="{Binding Path=Control.SupportedPattern, UpdateSourceTrigger=PropertyChanged}"  />
+        <Image Grid.Column="1" Grid.Row="7" HorizontalAlignment="Left" VerticalAlignment="Center" Name="imgSnapshot" RenderOptions.BitmapScalingMode="NearestNeighbor" RenderOptions.EdgeMode="Aliased" Stretch = "None" Width="Auto" Height="Auto"  Source="{Binding Path=Control.Snapshot, Converter={StaticResource SnapshotConverter}}" />
+    </Grid>
+</UserControl>

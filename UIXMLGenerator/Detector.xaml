@@ -1,0 +1,95 @@
+﻿<Window x:Class="UIAutoXMLBuilder.Detector"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mode="clr-namespace:UIAutoXMLBuilder.Base"
+        Title="Detector" Height="768" Width="1024"
+        xmlns:local="clr-namespace:UIAutoXMLBuilder.ViewModelClass" Unloaded="Window_Unloaded">
+    <Window.Resources>
+        <Style TargetType="{x:Type Image}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type UIElement}, AncestorLevel=1}, Path=IsEnabled}"  Value="False">
+                    <Setter Property="Opacity"  Value="0.2" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="34"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <ToolBar Height="34" HorizontalAlignment="Stretch" Name="detectorToolBar" VerticalAlignment="Top">            
+            <Button Height="32" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding DetectCommmand}">
+                <Image Source="/Polaris;component/images/detect.png"  ToolTip="Detect"/>
+            </Button>
+            <Button Height="32" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding  ExportCommand}">
+                <Image Source="/Polaris;component/images/export.png" ToolTip="Bulk Add" />
+            </Button>
+            <Button Height="32"  VerticalAlignment="Top" Command="{Binding  InsertIntoControlCommand}">
+                <Image Source="/Polaris;component/images/insertinto.png" ToolTip="Insert Into" />
+            </Button>
+            <Button Height="32" VerticalAlignment="Top" Command="{Binding  InsertBeforeControlCommand}">
+                <Image Source="/Polaris;component/images/insertbefore.png" ToolTip="Insert Before" />
+            </Button>
+            <Button Height="32" VerticalAlignment="Top" Command="{Binding  InsertAfterControlCommand}">
+                <Image Source="/Polaris;component/images/insertafter.png" ToolTip="Insert After"  />
+            </Button>
+            <Button Height="32" VerticalAlignment="Top" Command="{Binding  ReplaceControlCommand}">
+                <Image Source="/Polaris;component/images/replace.png" ToolTip="Replace" />
+            </Button>
+        </ToolBar>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="60*"></ColumnDefinition>
+                <ColumnDefinition Width="3"></ColumnDefinition>
+                <ColumnDefinition Width="40*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <GroupBox Grid.Column="0" Header="UI Tree" HorizontalAlignment="Stretch" Name="gpTree" VerticalAlignment="Stretch">
+                <TreeView Name="tvDetectControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  
+                              SelectedItemChanged="tvDetectControl_SelectedItemChanged"
+                              ItemsSource="{Binding UIControlCollection}">
+                    <TreeView.ItemContainerStyle>
+                        <Style TargetType="TreeViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Left" />
+                            <Setter Property="VerticalContentAlignment" Value="Center" />
+                            <!--<Setter Property="IsSelected" Value="{Binding Path=IsSelected, UpdateSourceTrigger=PropertyChanged}" />-->
+                            <!--<Setter Property="IsExpanded" Value="{Binding Path=IsExpanded, UpdateSourceTrigger=PropertyChanged}" />-->
+                        </Style>
+                    </TreeView.ItemContainerStyle>
+                    <TreeView.ItemTemplate>
+                        <HierarchicalDataTemplate DataType="{x:Type mode:DetectUIControl}" ItemsSource="{Binding ChildControls}">
+                            <StackPanel Orientation="Horizontal">
+                                <CheckBox Name="ckbExport" IsChecked="{Binding Path=IsExport, UpdateSourceTrigger=PropertyChanged}"></CheckBox>
+                                <TextBlock Grid.Column="1" Text="{Binding Path=Name, UpdateSourceTrigger=PropertyChanged}" 
+                                           ToolTip="{Binding Path=Name, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+                    </TreeView.ItemTemplate>
+                </TreeView>
+            </GroupBox>
+            <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  ShowsPreview="True"  Width="2" />
+            <GroupBox Grid.Column="2" HorizontalAlignment="Stretch" Name="gpProperties" 
+                      VerticalAlignment="Stretch" Header="Properties" >
+                <ScrollViewer Name="scrollViewer" ScrollViewer.IsDeferredScrollingEnabled="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Margin="2">
+                    <Grid>
+                        <DataGrid Name="gridControl" 
+                                AutoGenerateColumns="False" 
+                                GridLinesVisibility="All"  
+                                VerticalAlignment="Stretch" 
+                                HorizontalAlignment="Stretch" 
+                                PreviewMouseWheel="gridControl_PreviewMouseWheel"
+                                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                CanUserAddRows="False"
+                                CanUserDeleteRows="False" 
+                                CanUserSortColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Name" FontWeight="Bold" Binding="{Binding Key}" IsReadOnly="True"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Value" Binding="{Binding Value}" IsReadOnly="True"></DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </ScrollViewer>
+            </GroupBox>
+        </Grid>
+    </Grid>
+</Window>
